@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>IDE</title>
+		<style>
+			body{
+				background-color: black;
+			}
+			.ide-head{
+				text-align: center;
+				background-color: lightpink ;
+			}
+			.ide-content {	
+				margin: 10px;
+				border: 5px;
+				font-color : black;
+				height: 200px;
+			}
+			.ide-code {
+				width: 100%;
+				float: left;
+				height: 150px;
+				box-sizing: border-box;
+				resize: none;
+				border: 2px solid lightgrey;
+			}		
+			.ide-footer {
+				background-color: lightgrey;
+				padding: 15px;
+				padding-left: 20px; 
+				font-size: 14px;
+				text-align: center;
+			}
+			.ide-link {
+				text-decoration: none;
+				color: black;
+				font-style: italic;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="ide-head">
+			<h1 class="ide-head-content"> Online IDE </h1>
+		</div>
+		<div class="ide-content">
+			<form method="POST" action="/submit">
+				<textarea class="ide-code">Enter Your Code</textarea>
+				<select>
+					<option value="c">C</option>
+					<option value="cpp">C++14</option>
+					<option value="py">Python3</option>
+					<option value="ruby">Ruby</option>
+				</select>
+				<button>Run</button>
+			</form>
+		</div>
+		<footer class="ide-footer">
+			<p class="ide-dev">Developed By Riyan Dhiman</p>
+			<p class="ide-proj-link">Link to Project <a class="ide-link" href="https://github.com/Ryand1234/Online-Ide">Github</a><p>
+		</footer>
+	</body>
+</html>

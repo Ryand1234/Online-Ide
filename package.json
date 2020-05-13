@@ -1,0 +1,29 @@
+{
+  "name": "online-ide",
+  "version": "1.0.0",
+  "description": "An Online Ide",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodaemon start main.js --log /home/riyan/github/Online-Ide/.ide.log",
+    "stop": "nodaemon stop main.js",
+    "test": "\"start\" : \"node main.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ryand1234/Online-Ide.git"
+  },
+  "author": "Riyan Dhiman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ryand1234/Online-Ide/issues"
+  },
+  "homepage": "https://github.com/Ryand1234/Online-Ide#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "morgan": "^1.10.0",
+    "nodaemon": "0.0.5"
+  }
+}
