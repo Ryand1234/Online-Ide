@@ -16,7 +16,10 @@ if lang == 'cpp':
 
     output = subprocess.Popen([command, argv1, argv2, argv3], stdout=subprocess.PIPE)
 
-    print(str(output.communicate()))
+    res = output.communicate();
+    if res[1] is not None:
+        print(res[1].decode('utf-8'))
+        sys.exit(1)
 
     command2 = './tes1'
 
@@ -27,7 +30,12 @@ elif lang == 'py':
     argv = code
 
     output = subprocess.Popen([command, argv], stdout=subprocess.PIPE);
-    print(str(output.communicate()[0]))
+    res = output.communicate()
+
+    if res[1] is None:
+        print(res[0].decode('utf-8'))
+    else:
+        print(res.decode('utf-8'))
 elif lang == 'c':
     command = 'gcc'
     argv1 = '-o'
@@ -36,7 +44,10 @@ elif lang == 'c':
 
     output = subprocess.Popen([command, argv1, argv2, argv3], stdout=subprocess.PIPE)
 
-    print(str(output.communicate()))
+    res = output.communicate();
+    if res[1] is not None:
+        print(res[1].decode('utf-8'))
+        sys.exit(1)
 
     command2 = './tes1'
 
@@ -47,4 +58,16 @@ else:
     argv = code
 
     output = subprocess.Popen([command, argv], stdout=subprocess.PIPE);
-    print(str(output.communicate()))
+    
+    res = output.communicate();
+    if res[1] is not None:
+        print(res[1].decode('utf-8'))
+        sys.exit(1)
+    
+    print(res[0].decode('utf-8'))
+
+command = 'rm'
+argv = 'tes1'
+argv2 = code
+
+subprocess.Popen([command, argv, argv2])

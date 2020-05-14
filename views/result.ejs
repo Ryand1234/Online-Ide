@@ -18,13 +18,13 @@
 				height: 200px;
 			}
 			.ide-code {
-				width: 100%;
-				float: left;
-				height: 150px;
 				box-sizing: border-box;
-				resize: none;
 				border: 2px solid lightgrey;
 			}		
+			.ide-result {
+				box-sizing: border-box;
+				border: 2px solid lightgrey;
+			}
 			.ide-footer {
 				background-color: lightgrey;
 				padding: 15px;
@@ -38,9 +38,19 @@
 				font-style: italic;
 			}
 			.ide-code-content{
+				margin-left: 20px; 
+				padding-left: 10px;
+				text-align: left;
 				color: white;
+				white-space: pre-line;
 			}
 			.ide-result-content{
+				margin-left: 20px; 
+				padding-left: 10px;
+				color: white;
+				white-space: pre-line;
+			}
+			.ide-res {
 				color: white;
 			}
 		</style>
@@ -49,17 +59,22 @@
 		<div class="ide-head">
 			<h1 class="ide-head-content"> Online IDE </h1>
 		</div>
-		<div class="ide-content">
-			<section class="ide-code">
+			<p class="ide-res">Code</p>
+			<div class="ide-code">
 				<p class="ide-code-content">
 					<%= data.code %>
 				</p>
-			</section>
-			<section class="ide-result">
+			</div>
+			<p class="ide-res">Output</p>
+			<div class="ide-result">
 				<p class="ide-result-content">
-					<%= data.output %>
+					<%= data.output -%>
 				</p>
-			</section>
-		</div>
+			</div>
+		
+		<footer class="ide-footer">
+			<p class="ide-dev">Developed By Riyan Dhiman</p>
+			<p class="ide-proj-link">Link to Project <a class="ide-link" href="https://github.com/Ryand1234/Online-Ide">Github</a><p>
+		</footer>
 	</body>
 </html>

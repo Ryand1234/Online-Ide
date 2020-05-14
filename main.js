@@ -50,7 +50,7 @@ app.post('/submit', (req, res, next)=>{
 		console.error(`exec error: ${error}`)
 		return;
 	}
-		console.log(`stdout:\n${stdout}`);
+		//console.log(`stdout:\n${stdout}`);
 		//console.error(`stderr: ${stderr}`);
 		data = {
 			output: stdout,
