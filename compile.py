@@ -27,7 +27,7 @@ elif lang == 'py':
     argv = code
 
     output = subprocess.Popen([command, argv], stdout=subprocess.PIPE);
-    print(str(output.communicate()))
+    print(str(output.communicate()[0]))
 elif lang == 'c':
     command = 'gcc'
     argv1 = '-o'

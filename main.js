@@ -34,7 +34,7 @@ app.get('/', (req, res, next)=>{
 app.post('/submit', (req, res, next)=>{
 
 	var code = String(req.body.code);
-	console.log("REQ: ",req);
+	//console.log("REQ: ",req);
 	
 	var filename = 'test.' + req.body.lang;
 	fs.writeFile(filename,code, (err)=>{
@@ -52,7 +52,11 @@ app.post('/submit', (req, res, next)=>{
 	}
 		console.log(`stdout:\n${stdout}`);
 		//console.error(`stderr: ${stderr}`);
-		res.render('home.ejs');
+		data = {
+			output: stdout,
+			code: req.body.code
+		};
+		res.render('result.ejs',data);
 	});
 });
 
