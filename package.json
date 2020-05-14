@@ -4,7 +4,7 @@
   "description": "An Online Ide",
   "main": "main.js",
   "scripts": {
-    "start": "nodaemon start main.js --log /home/riyan/github/Online-Ide/.ide.log",
+    "start": "node main.js ",
     "stop": "nodaemon stop main.js",
     "test": "\"start\" : \"node main.js\""
   },
