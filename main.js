@@ -52,8 +52,8 @@ app.post('/submit', (req, res, next)=>{
 	}
 		console.log(`stdout:\n${stdout}`);
 		//console.error(`stderr: ${stderr}`);
+		res.render('home.ejs');
 	});
-	res.render('home.ejs');
 });
 
 app.use(function(req, res, next) {
