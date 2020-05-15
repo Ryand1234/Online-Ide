@@ -13,3 +13,16 @@ visit http://localhost:3000 for the IDE
 
 ## Built
 Online Ide is build with NodeJs using EJS (Embedded JavaScript).
+
+## Features Supported
+Show Errors (Compilation, Runtime etc)
+
+Support 4 Languages (C, C++, Python, Ruby)
+
+
+## Features to be added
+Doesn't support tab spacing
+
+Doesn't allow user input
+
+Doesn't allow code save
