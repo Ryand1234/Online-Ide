@@ -19,10 +19,9 @@ Show Errors (Compilation, Runtime etc)
 
 Support 4 Languages (C, C++, Python, Ruby)
 
+Allow user input
 
 ## Features to be added
 Doesn't support tab spacing
-
-Doesn't allow user input
 
 Doesn't allow code save
