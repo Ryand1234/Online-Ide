@@ -34,16 +34,25 @@ app.get('/', (req, res, next)=>{
 app.post('/submit', (req, res, next)=>{
 
 	var code = String(req.body.code);
+	var input = String(req.body.input);
 	//console.log("REQ: ",req);
 	
-	var filename = 'test.' + req.body.lang;
-	fs.writeFile(filename,code, (err)=>{
+	var code_filename = 'test.' + req.body.lang;
+	var input_filename = 'input.txt';
+
+	fs.writeFile(code_filename,code, (err)=>{
 		if(err)
 			throw err;
 		//console.log("Sabed");
 	})
 
-	var command = 'python3 compile.py ' + filename;
+	fs.writeFile(input_filename, input, (err)=>{
+                if(err)
+                        throw err;
+                console.log("Sabed");
+        })
+
+	var command = 'python3 compile.py ' + code_filename + ' input.txt';
 	exec(command, (error, stdout, stderr)=>{
 	if (error)
 	{
