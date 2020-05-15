@@ -13,12 +13,21 @@
 				margin: 10px;
 				border: 5px;
 				font-color : black;
-				height: 200px;
+				height: 350px;
 			}
 			.ide-code {
 				width: 100%;
 				float: left;
 				height: 150px;
+				box-sizing: border-box;
+				resize: none;
+				border: 2px solid lightgrey;
+			}
+			.ide-code-input {
+				width: 100%;
+				float: left;
+				height: 100px;
+				margin-left: 10px
 				box-sizing: border-box;
 				resize: none;
 				border: 2px solid lightgrey;
@@ -35,6 +44,9 @@
 				color: black;
 				font-style: italic;
 			}
+			#input{
+				color: white;
+			}
 		</style>
 	</head>
 	<body>
@@ -43,7 +55,9 @@
 		</div>
 		<div class="ide-content">
 			<form method="POST" action="/submit">
-				<textarea name="code" class="ide-code">Enter Your Code</textarea>
+				<textarea name="code" class="ide-code" placeholder="Enter Your Code"></textarea>
+				<p id="input">Input</p>
+				<textarea name="input" class="ide-code-input" placeholder="Input"></textarea>
 				<select name="lang">
 					<option value="c">C</option>
 					<option value="cpp">C++14</option>
