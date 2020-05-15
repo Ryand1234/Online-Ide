@@ -40,23 +40,30 @@ app.post('/submit', (req, res, next)=>{
 	fs.writeFile(filename,code, (err)=>{
 		if(err)
 			throw err;
-		console.log("Sabed");
+		//console.log("Sabed");
 	})
 
 	var command = 'python3 compile.py ' + filename;
 	exec(command, (error, stdout, stderr)=>{
 	if (error)
 	{
-		console.error(`exec error: ${error}`)
-		return;
+		//console.error(`exec error: ${stderr}`)
+		//console.error("STDOURT: ",stdout);
+		data = {
+                        error: stdout,
+                        code: req.body.code
+                        };
+		res.render('result.ejs', data);
 	}
-		//console.log(`stdout:\n${stdout}`);
+	else{	//console.log(`stdout:\n${stdout}`);
 		//console.error(`stderr: ${stderr}`);
+		//console.error(`exec error: ${error}`)
 		data = {
 			output: stdout,
 			code: req.body.code
-		};
-		res.render('result.ejs',data);
+			};
+			res.render('result.ejs',data);
+		}	
 	});
 });
 
