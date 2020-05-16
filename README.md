@@ -1,4 +1,4 @@
-# Online-Ide
+# Online-Ide  ![Docker Image CI](https://github.com/Ryand1234/Online-Ide/workflows/Docker%20Image%20CI/badge.svg)
 An Online Ide compatible with languages C, C++14, Python and Ruby.
 
 
