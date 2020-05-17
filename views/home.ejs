@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>IDE</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<style>
 			body{
 				background-color: black;
@@ -19,9 +20,46 @@
 				width: 100%;
 				float: left;
 				height: 150px;
+				white-space: pre;
+				word-wrap: normal;
+				overflow-wrap: normal;
+				cursor: text;
 				box-sizing: border-box;
+				font-size: 15px;
 				resize: none;
 				border: 2px solid lightgrey;
+				background-color: grey;
+			}
+			.box-code{
+				width:80%;
+				height:150px;
+				float: left;
+				margin-left: 3cm solid white;
+			}
+			.code-line{
+				white-space: pre;
+				word-wrap: normal;
+				overflow-wrap: normal;
+				cursor: text;
+				box-sizing: border-box;
+				font-size: 15px;
+				border: 2px solid lightgrey;
+				background-color: darkgrey;
+				border: 2px solid lightgrey;
+				color: black;
+				resize: none;
+				height: 150px;
+				width: 100%;
+			}
+			.editor-outer-margin{
+			margin-left: 3cm solid white;
+			color: white;
+			}
+			.box-lines{
+				width: 100px;
+				height: 150px;
+				margin-left: 3cm solid white;
+				float: left;
 			}
 			.ide-code-input {
 				width: 100%;
@@ -55,7 +93,14 @@
 		</div>
 		<div class="ide-content">
 			<form method="POST" action="/submit">
-				<textarea name="code" class="ide-code" placeholder="Enter Your Code"></textarea>
+				<div class="editor-outer-margin">
+					<div class="box-lines">
+						<textarea class="code-line" disabled="true"></textarea>
+					</div>
+					<div class="box-code">
+						<textarea class="ide-code" id="code" onkeydown="check(event)" name="code"></textarea>
+					</div>
+				</div>
 				<p id="input">Input</p>
 				<textarea name="input" class="ide-code-input" placeholder="Input"></textarea>
 				<select name="lang">
@@ -72,4 +117,30 @@
 			<p class="ide-proj-link">Link to Project <a class="ide-link" href="https://github.com/Ryand1234/Online-Ide">Github</a><p>
 		</footer>
 	</body>
+	<script type="text/javascript">	 
+	var TABKEY = 9;
+	var ENTER = 13;
+	var line = 1;
+	var code;
+	var $divs = $('.code-line, #code');
+var sync = function(e){
+    var $other = $divs.not(this).off('scroll'), other = $other.get(0);
+    var percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
+    other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
+    setTimeout( function(){ $other.on('scroll', sync ); },10);
+}
+$divs.on( 'scroll', sync);
+	function check(e){
+			code = e.keyCode;
+			if(code == 9){
+				$('#code').val($('#code').val() + "    ")
+				e.preventDefault();
+			}
+
+			if(code == 13){
+				$('.code-line').val($('.code-line').val() + line + '\n');
+				line = line + 1;
+			}
+	}
+</script>
 </html>
