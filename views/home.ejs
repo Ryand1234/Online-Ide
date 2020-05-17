@@ -84,7 +84,9 @@
 			}
 			#input{
 				color: white;
+				height: 4cm;
 			}
+			
 		</style>
 	</head>
 	<body>
@@ -100,16 +102,17 @@
 					<div class="box-code">
 						<textarea class="ide-code" id="code" onkeydown="check(event)" name="code"></textarea>
 					</div>
+					<p id="input"></p>
+					<p style="color: white;">Input</p>
+					<textarea name="input" class="ide-code-input" placeholder="Input"></textarea>
+					<select name="lang">
+						<option value="c">C</option>
+						<option value="cpp">C++14</option>
+						<option value="py">Python3</option>
+						<option value="rb">Ruby</option>
+					</select>
+					<button>Run</button>
 				</div>
-				<p id="input">Input</p>
-				<textarea name="input" class="ide-code-input" placeholder="Input"></textarea>
-				<select name="lang">
-					<option value="c">C</option>
-					<option value="cpp">C++14</option>
-					<option value="py">Python3</option>
-					<option value="rb">Ruby</option>
-				</select>
-				<button>Run</button>
 			</form>
 		</div>
 		<footer class="ide-footer">
