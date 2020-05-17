@@ -2,7 +2,7 @@
 An Online Ide compatible with languages C, C++14, Python and Ruby.
 
 
-## Steps to install
+## Steps to build locally
 clone the repository
 
 execute command `docker build -t ide:1 .`
