@@ -21,9 +21,9 @@ Support 4 Languages (C, C++, Python, Ruby)
 
 Allow user input
 
-## Features to be added
-Doesn't support tab spacing
+Support tab spacing
 
+## Features to be added
 Doesn't allow code save
 
 ## Helper Repo for Code Editor is present at [Code-Editor](https://github.com/Ryand1234/Code-Editor)
