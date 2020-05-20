@@ -14,7 +14,7 @@
 				margin: 10px;
 				border: 5px;
 				font-color : black;
-				height: 350px;
+				height: 10px;
 			}
 			.ide-code {
 				width: 100%;
@@ -23,49 +23,26 @@
 				white-space: pre;
 				word-wrap: normal;
 				overflow-wrap: normal;
-				cursor: text;
-				box-sizing: border-box;
 				font-size: 15px;
 				resize: none;
 				border: 2px solid lightgrey;
 				background-color: grey;
 			}
 			.box-code{
-				width:80%;
+				width:100%;
 				height:150px;
 				float: left;
 				margin-left: 3cm solid white;
-			}
-			.code-line{
-				white-space: pre;
-				word-wrap: normal;
-				overflow-wrap: normal;
-				cursor: text;
-				box-sizing: border-box;
-				font-size: 15px;
-				border: 2px solid lightgrey;
-				background-color: darkgrey;
-				border: 2px solid lightgrey;
-				color: black;
-				resize: none;
-				height: 150px;
-				width: 100%;
 			}
 			.editor-outer-margin{
 			margin-left: 3cm solid white;
 			color: white;
 			}
-			.box-lines{
-				width: 100px;
-				height: 150px;
-				margin-left: 3cm solid white;
-				float: left;
-			}
 			.ide-code-input {
 				width: 100%;
 				float: left;
 				height: 100px;
-				margin-left: 10px
+				margin-left: 10px;
 				box-sizing: border-box;
 				resize: none;
 				border: 2px solid lightgrey;
@@ -83,24 +60,79 @@
 				font-style: italic;
 			}
 			#input{
-				color: white;
 				height: 4cm;
 			}
-			
+			.statement {
+    color: blue;
+			}	
 		</style>
 	</head>
 	<body>
 		<div class="ide-head">
 			<h1 class="ide-head-content"> Online IDE </h1>
 		</div>
+		
+			<table>
+		<tr>
+			<th style="color: white;">Text Color  |</th>
+			<th style="color: white;">  Code Background Color  |</th>
+			<th style="color: white;">  Background Color  |</th>
+			<th style="color: white;">  Font Size  |</th>
+		</tr>
+		<tr>
+			<th>
+				<select>
+		<option onclick="txtColor(event)" value="red">Red</option>
+		<option onclick="txtColor(event)" value="blue">Blue</option>
+		<option onclick="txtColor(event)" value="green">Green</option>
+		<option onclick="txtColor(event)" value="cyan">Cyan</option>
+		<option onclick="txtColor(event)" value="black">Black</option>
+		<option onclick="txtColor(event)" value="yellow">Yellow</option>
+	</select>
+			</th>
+			<th>
+				<select >
+				<option onclick="ediBackColor(event)" value="red">Red</option>
+				<option onclick="ediBackColor(event)" value="grey">Grey</option>
+				<option onclick="ediBackColor(event)" value="white">white</option>
+				<option onclick="ediBackColor(event)" value="blue">Blue</option>
+				<option onclick="ediBackColor(event)" value="green">Green</option>
+				<option onclick="ediBackColor(event)" value="cyan">Cyan</option>
+				<option onclick="ediBackColor(event)" value="black">Black</option>
+				<option onclick="ediBackColor(event)" value="yellow">Yellow</option>
+				</select>
+	
+			</th>
+			<th>
+				<select >
+		<option onclick="backColor(event)" value="red">Red</option>
+		<option onclick="backColor(event)" value="grey">Grey</option>
+		<option onclick="backColor(event)" value="white">white</option>
+		<option onclick="backColor(event)" value="blue">Blue</option>
+		<option onclick="backColor(event)" value="green">Green</option>
+		<option onclick="backColor(event)" value="cyan">Cyan</option>
+		<option onclick="backColor(event)" value="black">Black</option>
+		<option onclick="backColor(event)" value="yellow">Yellow</option>
+	</select>
+			</th>
+			<th>
+				<select>
+					<option onclick="font(event)" value="5px">5px</option>
+					<option onclick="font(event)" value="10px">10px</option>
+					<option onclick="font(event)" value="15px">15px</option>
+					<option onclick="font(event)" value="20px">20px</option>
+					<option onclick="font(event)" value="25px">25px</option>
+					<option onclick="font(event)" value="30px">30px</option>
+				</select>
+			</th>
+	</table>
 		<div class="ide-content">
 			<form method="POST" action="/submit">
-				<div class="editor-outer-margin">
-					<div class="box-lines">
-						<textarea class="code-line" disabled="true"></textarea>
-					</div>
-					<div class="box-code">
-						<textarea class="ide-code" id="code" onkeydown="check(event)" name="code"></textarea>
+				</div>
+					<div class="editor-outer-margin">
+						<div class="box-code">
+							<div id="code" class="ide-code" onkeyup="check(event)" contenteditable="true"></div>
+						</div>
 					</div>
 					<p id="input"></p>
 					<p style="color: white;">Input</p>
@@ -120,30 +152,73 @@
 			<p class="ide-proj-link">Link to Project <a class="ide-link" href="https://github.com/Ryand1234/Online-Ide">Github</a><p>
 		</footer>
 	</body>
-	<script type="text/javascript">	 
+	<script type="text/javascript">
+var python = ["and", "assert", "in", "del",	"else", "raise", "from", "if", "continue", "not", "pass", "finally", "while", "yield", "is", "as", "break", "return", "elif", "except",	"def", "global", "import", "for", "or",	"print", "lambda", "with", "class", "try", "exec"];
 	var TABKEY = 9;
 	var ENTER = 13;
 	var line = 1;
 	var code;
 	var $divs = $('.code-line, #code');
-var sync = function(e){
-    var $other = $divs.not(this).off('scroll'), other = $other.get(0);
-    var percentage = this.scrollTop / (this.scrollHeight - this.offsetHeight);
-    other.scrollTop = percentage * (other.scrollHeight - other.offsetHeight);
-    setTimeout( function(){ $other.on('scroll', sync ); },10);
-}
-$divs.on( 'scroll', sync);
+
+	function txtColor(e){
+		$('.ide-code').css("color", e.target.innerHTML);
+	}
+
+	function backColor(e){
+		$('body').css("background-color", e.target.innerHTML);
+	}
+
+	function ediBackColor(e){
+		$('.ide-code').css("background-color", e.target.innerHTML);
+	}
+
+	function font(e){
+		$('.ide-code').css('font-size', e.target.innerHTML)
+	}
+
 	function check(e){
 			code = e.keyCode;
+			//console.log("CODE: ",code)
 			if(code == 9){
-				$('#code').val($('#code').val() + "    ")
-				e.preventDefault();
+			
+			newHTML = '';
+			newHTML += "<span class='statement'>    &nbsp;</span>";
+			$("#code").html(newHTML);
+
+    			var child = $('#code').children();
+			    var range = document.createRange();
+    			var sel = window.getSelection();
+    			range.setStart(child[child.length-1], 1);
+    			range.collapse(true);
+    			sel.removeAllRanges();
+    			sel.addRange(range);
+        	e.preventDefault();
+
 			}
 
-			if(code == 13){
-				$('.code-line').val($('.code-line').val() + line + '\n');
-				line = line + 1;
-			}
-	}
+			if (e.keyCode == 32){
+    var newHTML = "";
+    $('#code').text().replace(/[\s]+/g, " ").trim().split(" ").forEach(function(val){
+      if (python.indexOf(val) > -1){
+        newHTML += "<span class='statement'>" + val + "&nbsp;</span>";
+    }
+      else{
+        newHTML += "<span class='other'>" + val + "&nbsp;</span>"; 
+    }
+    });
+    			$('#code').html(newHTML);
+
+    			var child = $('#code').children();
+			    var range = document.createRange();
+    			var sel = window.getSelection();
+    			window.setTimeout(1);
+    			range.setStart(child[child.length-1], 1);
+    			range.collapse(true);
+    			sel.removeAllRanges();
+    			sel.addRange(range);
+    			
+		  }
+
+		}
 </script>
 </html>
