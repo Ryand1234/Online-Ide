@@ -14,17 +14,14 @@
 				margin: 10px;
 				border: 5px;
 				font-color : black;
-				height: 10px;
+				height: 350px;
 			}
 			.ide-code {
 				width: 100%;
 				float: left;
 				height: 150px;
 				white-space: pre;
-				word-wrap: normal;
-				overflow-wrap: normal;
 				font-size: 15px;
-				resize: none;
 				border: 2px solid lightgrey;
 				background-color: grey;
 			}
@@ -71,67 +68,66 @@
 		<div class="ide-head">
 			<h1 class="ide-head-content"> Online IDE </h1>
 		</div>
-		
-			<table>
-		<tr>
-			<th style="color: white;">Text Color  |</th>
-			<th style="color: white;">  Code Background Color  |</th>
-			<th style="color: white;">  Background Color  |</th>
-			<th style="color: white;">  Font Size  |</th>
-		</tr>
-		<tr>
-			<th>
-				<select>
-		<option onclick="txtColor(event)" value="red">Red</option>
-		<option onclick="txtColor(event)" value="blue">Blue</option>
-		<option onclick="txtColor(event)" value="green">Green</option>
-		<option onclick="txtColor(event)" value="cyan">Cyan</option>
-		<option onclick="txtColor(event)" value="black">Black</option>
-		<option onclick="txtColor(event)" value="yellow">Yellow</option>
-	</select>
-			</th>
-			<th>
-				<select >
-				<option onclick="ediBackColor(event)" value="red">Red</option>
-				<option onclick="ediBackColor(event)" value="grey">Grey</option>
-				<option onclick="ediBackColor(event)" value="white">white</option>
-				<option onclick="ediBackColor(event)" value="blue">Blue</option>
-				<option onclick="ediBackColor(event)" value="green">Green</option>
-				<option onclick="ediBackColor(event)" value="cyan">Cyan</option>
-				<option onclick="ediBackColor(event)" value="black">Black</option>
-				<option onclick="ediBackColor(event)" value="yellow">Yellow</option>
-				</select>
+		<table>
+			<tr>
+				<th style="color: white;">Text Color  |</th>
+				<th style="color: white;">  Code Background Color  |</th>
+				<th style="color: white;">  Background Color  |</th>
+				<th style="color: white;">  Font Size  |</th>
+			</tr>
+			<tr>
+				<th>
+					<select>
+						<option onclick="txtColor(event)" value="red">Red</option>
+						<option onclick="txtColor(event)" value="blue">Blue</option>
+						<option onclick="txtColor(event)" value="green">Green</option>
+						<option onclick="txtColor(event)" value="cyan">Cyan</option>
+						<option onclick="txtColor(event)" value="black">Black</option>
+						<option onclick="txtColor(event)" value="yellow">Yellow</option>
+					</select>
+				</th>
+				<th>
+					<select >
+						<option onclick="ediBackColor(event)" value="red">Red</option>
+						<option onclick="ediBackColor(event)" value="grey">Grey</option>
+						<option onclick="ediBackColor(event)" value="white">white</option>
+						<option onclick="ediBackColor(event)" value="blue">Blue</option>
+						<option onclick="ediBackColor(event)" value="green">Green</option>
+						<option onclick="ediBackColor(event)" value="cyan">Cyan</option>
+						<option onclick="ediBackColor(event)" value="black">Black</option>
+						<option onclick="ediBackColor(event)" value="yellow">Yellow</option>
+					</select>
 	
-			</th>
-			<th>
-				<select >
-		<option onclick="backColor(event)" value="red">Red</option>
-		<option onclick="backColor(event)" value="grey">Grey</option>
-		<option onclick="backColor(event)" value="white">white</option>
-		<option onclick="backColor(event)" value="blue">Blue</option>
-		<option onclick="backColor(event)" value="green">Green</option>
-		<option onclick="backColor(event)" value="cyan">Cyan</option>
-		<option onclick="backColor(event)" value="black">Black</option>
-		<option onclick="backColor(event)" value="yellow">Yellow</option>
-	</select>
-			</th>
-			<th>
-				<select>
-					<option onclick="font(event)" value="5px">5px</option>
-					<option onclick="font(event)" value="10px">10px</option>
-					<option onclick="font(event)" value="15px">15px</option>
-					<option onclick="font(event)" value="20px">20px</option>
-					<option onclick="font(event)" value="25px">25px</option>
-					<option onclick="font(event)" value="30px">30px</option>
-				</select>
-			</th>
-	</table>
+				</th>
+				<th>
+					<select >
+						<option onclick="backColor(event)" value="red">Red</option>
+						<option onclick="backColor(event)" value="grey">Grey</option>
+						<option onclick="backColor(event)" value="white">white</option>
+						<option onclick="backColor(event)" value="blue">Blue</option>
+						<option onclick="backColor(event)" value="green">Green</option>
+						<option onclick="backColor(event)" value="cyan">Cyan</option>
+						<option onclick="backColor(event)" value="black">Black</option>
+						<option onclick="backColor(event)" value="yellow">Yellow</option>
+					</select>
+				</th>
+				<th>
+					<select>
+						<option onclick="font(event)" value="5px">5px</option>
+						<option onclick="font(event)" value="10px">10px</option>
+						<option onclick="font(event)" value="15px">15px</option>
+						<option onclick="font(event)" value="20px">20px</option>
+						<option onclick="font(event)" value="25px">25px</option>
+						<option onclick="font(event)" value="30px">30px</option>
+					</select>
+				</th>
+			</tr>
+		</table>
 		<div class="ide-content">
 			<form method="POST" action="/submit">
-				</div>
 					<div class="editor-outer-margin">
-						<div class="box-code">
-							<div id="code" class="ide-code" onkeyup="check(event)" contenteditable="true"></div>
+						<div class="box-code" >
+							<div id="code" class="ide-code" onkeypress="check(event)" contenteditable="true"></div>
 						</div>
 					</div>
 					<p id="input"></p>
@@ -144,7 +140,6 @@
 						<option value="rb">Ruby</option>
 					</select>
 					<button>Run</button>
-				</div>
 			</form>
 		</div>
 		<footer class="ide-footer">
@@ -197,27 +192,50 @@ var python = ["and", "assert", "in", "del",	"else", "raise", "from", "if", "cont
 			}
 
 			if (e.keyCode == 32){
-    var newHTML = "";
-    $('#code').text().replace(/[\s]+/g, " ").trim().split(" ").forEach(function(val){
-      if (python.indexOf(val) > -1){
-        newHTML += "<span class='statement'>" + val + "&nbsp;</span>";
-    }
-      else{
-        newHTML += "<span class='other'>" + val + "&nbsp;</span>"; 
-    }
-    });
+    			var newHTML = "";
+			    $('#code').text().replace(/[\s]+/g, " ").trim().split(" ").forEach(function(val){
+      			if (python.indexOf(val) > -1){
+        			newHTML += "<span class='statement'>" + val + "&#32;</span>";
+    			}
+				else{
+        			newHTML += "<span class='other'>" + val + "&#32;</span>"; 
+    			}
+    			});
+    			$('#code').html(newHTML);
+
+    			var child = $('#code').children();
+    			console.log("CHILD: ",child);
+			    var range = document.createRange();
+    			var sel = window.getSelection();    			
+    			range.setStart(child[child.length-1], 1);
+    			range.collapse(true);
+    			sel.removeAllRanges();
+    			sel.addRange(range);
+				e.preventDefault();
+				$("#code").focus()
+			}
+
+			if (e.keyCode == 13){
+    			var newHTML = "";
+			    $('#code').text().replace(/[\s]+/g, " ").trim().split(" ").forEach(function(val){
+      			if (python.indexOf(val) > -1){
+        			newHTML += "<span class='statement'>" + val + "&#32;</span>";
+    			}
+				else{
+        			newHTML += "<span class='other'>" + val + "&#32;</span>";
+    			}
+    			});
     			$('#code').html(newHTML);
 
     			var child = $('#code').children();
 			    var range = document.createRange();
     			var sel = window.getSelection();
-    			window.setTimeout(1);
     			range.setStart(child[child.length-1], 1);
     			range.collapse(true);
     			sel.removeAllRanges();
     			sel.addRange(range);
-    			
-		  }
+    			$("#code").focus()
+			}
 
 		}
 </script>
