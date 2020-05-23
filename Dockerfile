@@ -22,7 +22,7 @@ COPY . /usr/local/ide
 WORKDIR /usr/local/ide
 
 #Installing Node Dependencies
-RUN npm install nodaemon
+RUN npm install
 
 RUN ls -la
 
