@@ -1,14 +1,11 @@
 import React from 'react';
 import './App.css';
-import {IDE} from './pages/ide.componenent'
+import {PAGE} from './pages/main.component'
 
 function App() {
   return (
     <div>
-      <div className="App">
-        <h1>Online IDE</h1>
-      </div>
-      <IDE />
+      <PAGE />
     </div>
   );
 }

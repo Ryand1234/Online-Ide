@@ -52,6 +52,12 @@ export class IDE extends React.Component {
 		}
 	}
 
+	editorDidMount = (editor) => {
+	    // eslint-disable-next-line no-console
+	    console.log("editorDidMount", editor, editor.getValue(), editor.getModel());
+	    this.editor = editor;
+	};
+
 	onChange = (newValue, e) =>{
 		console.log("CHnage: ", newValue," E: ",e)
 		this.setState({code: newValue})
@@ -61,9 +67,7 @@ export class IDE extends React.Component {
 		console.log("CODE: ", this.state.code)
 	}
 
-	handleLanguage(e){
-		this.setState({language: e.value, code: code[e.value]})
-	}
+	
 
 	render(){
 		const options = {
@@ -81,12 +85,9 @@ export class IDE extends React.Component {
 				theme="vs-dark"
 				options={options}
 				language={this.state.language}
+				editorDidMount={this.editorDidMount}
 				onChange={this.onChange}
 			/>
-			<button onClick={this.show}>
-				Show code
-			</button>
-			<Select options={this.state.selectOptions} onChange={this.handleLanguage.bind(this)} />
 			</div>
 		)
 	}
