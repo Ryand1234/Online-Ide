@@ -1,8 +1,8 @@
 import MonacoEditor from 'react-monaco-editor'
-import React, {useState} from 'react'
+import React from 'react'
 import Select from 'react-select'
 
-var code = `
+var typescript = `
 
 //Define TypeScript Interface
 interface IPerson{
@@ -18,8 +18,27 @@ const Aman:IPerson = {
 	age: 23,
 	mobile: 9874563215
 }
-
 `
+
+var python = `
+//Write your code here
+`
+
+var c = `
+#include <stdio.h>
+
+int main()
+{
+	//Enter your code here
+	return 0;
+}
+`
+var code = {
+	python: python,
+	c: c,
+	typescript: typescript
+}
+
 
 export class IDE extends React.Component {
 
@@ -28,7 +47,7 @@ export class IDE extends React.Component {
 		super(props);
 		this.state={
 			selectOptions: [{value: 'typescript', label: 'typescript'},{value: 'cpp', label: 'cpp'}, {value: 'c', label: 'c' }, {value: 'python', label: 'python'}, {value: 'ruby', label: 'ruby'}],
-			code: code,
+			code: code['typescript'],
 			language: "typescript"
 		}
 	}
@@ -43,11 +62,15 @@ export class IDE extends React.Component {
 	}
 
 	handleLanguage(e){
-		console.log("C: ", e);
-		this.setState({language: e.value})
+		this.setState({language: e.value, code: code[e.value]})
 	}
 
 	render(){
+		const options = {
+	      selectOnLineNumbers: true,
+	      fontSize: 15,
+	      colorDecorators: true
+	    };
 		return(
 			<div>
 			<MonacoEditor
@@ -56,6 +79,7 @@ export class IDE extends React.Component {
 				defaultValue=''
 				value={this.state.code}
 				theme="vs-dark"
+				options={options}
 				language={this.state.language}
 				onChange={this.onChange}
 			/>
