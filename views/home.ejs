@@ -20,6 +20,7 @@
 				width: 100%;
 				float: left;
 				height: 150px;
+				overflow-y: auto;
 				white-space: pre;
 				font-size: 15px;
 				border: 2px solid lightgrey;
@@ -192,21 +193,41 @@ var python = ["and", "assert", "in", "del",	"else", "raise", "from", "if", "cont
 			}
 
 			if (e.keyCode == 32){
-    			var newHTML = "";
-			    $('#code').text().replace(/[\s]+/g, " ").trim().split(" ").forEach(function(val){
+    			var newHTML = $("#code")
+    			console.log("HTM: ",newHTML)
+			    var txt = $('#code').text().replace(/[\s]+/g, " ").trim().split(" ")
+			    
+			    var val = txt[txt.length-1];
+      			console.log("TXT: ",val)
+      			var elt = e.target;
+      			e.preventDefault();
+            	elt.focus();
+	            sel = document.getSelection();
+    	        sel.modify("extend", "backward", "word");
+        	    range = sel.getRangeAt(0);
+            	console.log(range.toString().trim());
+	            range.deleteContents();
+    	        var el = document.createElement("div");
+        	    el.innerHTML = '';
+            	var frag = document.createDocumentFragment(), node;
+	            while (node = el.firstChild) {
+    	            frag.appendChild(node);
+        	    }
+            	range.insertNode(frag);
+            	range.collapse();
+      			console.log("LAS: ",txt[txt.length-1])
       			if (python.indexOf(val) > -1){
-        			newHTML += "<span class='statement'>" + val + "&#32;</span>";
+        			$("#code").append("<span class='statement'>" + val + "&#32;</span>")
     			}
 				else{
-        			newHTML += "<span class='other'>" + val + "&#32;</span>"; 
+        			$("#code").append("<span class='other'>" + val + "&#32;</span>") 
     			}
-    			});
-    			$('#code').html(newHTML);
+    			//$('#code').html(newHTML);
 
     			var child = $('#code').children();
     			console.log("CHILD: ",child);
 			    var range = document.createRange();
-    			var sel = window.getSelection();    			
+    			var sel = window.getSelection();			
     			range.setStart(child[child.length-1], 1);
     			range.collapse(true);
     			sel.removeAllRanges();
@@ -216,25 +237,8 @@ var python = ["and", "assert", "in", "del",	"else", "raise", "from", "if", "cont
 			}
 
 			if (e.keyCode == 13){
-    			var newHTML = "";
-			    $('#code').text().replace(/[\s]+/g, " ").trim().split(" ").forEach(function(val){
-      			if (python.indexOf(val) > -1){
-        			newHTML += "<span class='statement'>" + val + "&#32;</span>";
-    			}
-				else{
-        			newHTML += "<span class='other'>" + val + "&#32;</span>";
-    			}
-    			});
-    			$('#code').html(newHTML);
-
-    			var child = $('#code').children();
-			    var range = document.createRange();
-    			var sel = window.getSelection();
-    			range.setStart(child[child.length-1], 1);
-    			range.collapse(true);
-    			sel.removeAllRanges();
-    			sel.addRange(range);
-    			$("#code").focus()
+    			var txt = $('#code').text().replace(/[\s]+/g, " ").trim().split(" ")
+			    
 			}
 
 		}

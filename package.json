@@ -20,9 +20,11 @@
   "homepage": "https://github.com/Ryand1234/Online-Ide#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "create-react-app": "^3.4.1",
     "ejs": "^3.1.2",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
+    "monaco-editor": "^0.21.2",
     "morgan": "^1.10.0",
     "nodaemon": "0.0.5"
   }
