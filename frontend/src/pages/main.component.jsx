@@ -2,10 +2,9 @@ import React from 'react'
 import {IDE} from '../component/ide.componenent'
 import './main.css'
 export class PAGE extends React.Component {
+	
 	render(){
-		handleLanguage(e){
-			this.setState({language: e.value, code: code[e.value]})
-		}
+		
 		return (
 		    <div>
 		    	<div className="ide-head">
@@ -68,10 +67,7 @@ export class PAGE extends React.Component {
 				</table>
 				<div className="ide-content">			
 				      <IDE />
-					<form method="POST" action="/submit">
-							<Select options={this.state.selectOptions} onChange={this.handleLanguage.bind(this)} />
-							<button>Run</button>
-					</form>
+					
 				</div>
 				<footer className="ide-footer">
 					<p className="ide-dev">Developed By Riyan Dhiman</p>

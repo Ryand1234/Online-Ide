@@ -67,7 +67,9 @@ export class IDE extends React.Component {
 		console.log("CODE: ", this.state.code)
 	}
 
-	
+	handleLanguage(e){
+		this.setState({language: e.value, code: code[e.value]})
+	}	
 
 	render(){
 		const options = {
@@ -77,17 +79,22 @@ export class IDE extends React.Component {
 	    };
 		return(
 			<div>
-			<MonacoEditor
-				width="600"
-				height="400"
-				defaultValue=''
-				value={this.state.code}
-				theme="vs-dark"
-				options={options}
-				language={this.state.language}
-				editorDidMount={this.editorDidMount}
-				onChange={this.onChange}
-			/>
+				<MonacoEditor
+					width="1300"
+					height="300"
+					defaultValue=''
+					value={this.state.code}
+					theme="vs-dark"
+					options={options}
+					language={this.state.language}
+					editorDidMount={this.editorDidMount}
+					onChange={this.onChange}
+				/>
+				<form method="POST" action="/submit">
+					<input value={this.state.code} type="hidden" />
+					<Select options={this.state.selectOptions} onChange={this.handleLanguage.bind(this)} />
+					<button>Run</button>
+				</form>
 			</div>
 		)
 	}
