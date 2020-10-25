@@ -19,8 +19,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //To Create Server
-var server = app.listen(process.env.PORT||3000, ()=>{
-	console.log("Server Listening at http://localhost:3000");
+var server = app.listen(process.env.PORT||5000, ()=>{
+	console.log("Server Listening at http://localhost:5000");
 	});
 
 
@@ -59,10 +59,10 @@ app.post('/submit', (req, res, next)=>{
 		//console.error(`exec error: ${stderr}`)
 		//console.error("STDOURT: ",stdout);
 		data = {
-                        error: stdout,
-                        code: req.body.code
-                        };
-		res.render('result.ejs', data);
+                error: stdout,
+                code: req.body.code
+            };
+		res.status(200).json(data);
 	}
 	else{	//console.log(`stdout:\n${stdout}`);
 		//console.error(`stderr: ${stderr}`);
@@ -71,7 +71,7 @@ app.post('/submit', (req, res, next)=>{
 			output: stdout,
 			code: req.body.code
 			};
-			res.render('result.ejs',data);
+			res.status(200).json(data);
 		}	
 	});
 });

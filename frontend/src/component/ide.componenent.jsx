@@ -1,6 +1,5 @@
 import MonacoEditor from 'react-monaco-editor'
 import React from 'react'
-import Select from 'react-select'
 
 var typescript = `
 
@@ -39,6 +38,14 @@ var code = {
 	typescript: typescript
 }
 
+var clanguage = {}
+
+clanguage['c'] = 'c';
+clanguage['cpp'] = 'cpp';
+clanguage['rb'] = 'ruby';
+clanguage['py'] = 'python';
+clanguage['typescript'] = 'typescript';
+
 
 export class IDE extends React.Component {
 
@@ -46,7 +53,6 @@ export class IDE extends React.Component {
 	{
 		super(props);
 		this.state={
-			selectOptions: [{value: 'typescript', label: 'typescript'},{value: 'cpp', label: 'cpp'}, {value: 'c', label: 'c' }, {value: 'python', label: 'python'}, {value: 'ruby', label: 'ruby'}],
 			code: code['typescript'],
 			language: "typescript"
 		}
@@ -67,9 +73,25 @@ export class IDE extends React.Component {
 		console.log("CODE: ", this.state.code)
 	}
 
-	handleLanguage(e){
-		this.setState({language: e.value, code: code[e.value]})
+	
+
+	handleLanguage = (e) =>{
+		this.setState({language: clanguage[e.target.value], code: code[clanguage[e.target.value]]})
 	}	
+
+	handleSubmit = async(e) => {
+		e.preventDefault();
+		var data = {
+			code: this.state.code,
+			lang: this.state.language
+		}
+		var options = {
+			method: 'POST',
+			body: JSON.stringify(data)
+		}
+		var res = await fetch("http://localhost:5000/submit", options);
+		console.log("D: ", res);
+	}
 
 	render(){
 		const options = {
@@ -90,11 +112,14 @@ export class IDE extends React.Component {
 					editorDidMount={this.editorDidMount}
 					onChange={this.onChange}
 				/>
-				<form method="POST" action="/submit">
-					<input value={this.state.code} type="hidden" />
-					<Select options={this.state.selectOptions} onChange={this.handleLanguage.bind(this)} />
-					<button>Run</button>
-				</form>
+				<select onChange={this.handleLanguage} name="lang">
+					<option  value="typescript">TypeScript</option>
+					<option value="c">C</option>
+					<option value="cpp">C++14</option>
+					<option value="py">Python3</option>
+					<option  value="rb">Ruby</option>
+				</select>
+				<button onClick={this.handleSubmit}>Run</button>
 			</div>
 		)
 	}
