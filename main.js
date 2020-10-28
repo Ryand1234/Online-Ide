@@ -31,11 +31,10 @@ app.get('/', (req, res, next)=>{
 
 
 //To Get Code and Language
-app.post('/submit', (req, res, next)=>{
+app.post('/submit',async(req, res, next)=>{
 
 	var code = String(req.body.code);
 	var input = String(req.body.input);
-	//console.log("REQ: ",req);
 	
 	var code_filename = 'test.' + req.body.lang;
 	var input_filename = 'input.txt';
@@ -49,7 +48,6 @@ app.post('/submit', (req, res, next)=>{
 	fs.writeFile(input_filename, input, (err)=>{
                 if(err)
                         throw err;
-                console.log("Sabed");
         })
 
 	var command = 'python3 compile.py ' + code_filename + ' input.txt';
@@ -62,7 +60,7 @@ app.post('/submit', (req, res, next)=>{
                 error: stdout,
                 code: req.body.code
             };
-		res.status(200).json(data);
+		res.status(500).json(data);
 	}
 	else{	//console.log(`stdout:\n${stdout}`);
 		//console.error(`stderr: ${stderr}`);

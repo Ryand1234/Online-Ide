@@ -1,9 +1,7 @@
 import MonacoEditor from 'react-monaco-editor'
 import React from 'react'
 
-var typescript = `
-
-//Define TypeScript Interface
+var typescript = `//Define TypeScript Interface
 interface IPerson{
 	name: String;
 	age: Number;
@@ -19,12 +17,10 @@ const Aman:IPerson = {
 }
 `
 
-var python = `
-//Write your code here
+var python = `''Write your code here'''
 `
 
-var c = `
-#include <stdio.h>
+var c = `#include <stdio.h>
 
 int main()
 {
@@ -32,10 +28,25 @@ int main()
 	return 0;
 }
 `
+
+var cpp = `#include <iostream>
+
+int main()
+{
+	//Enter your code here
+	return 0;
+}
+`
+
+var ruby = `#Write Your Code here
+`
+
 var code = {
 	python: python,
 	c: c,
-	typescript: typescript
+	typescript: typescript,
+	cpp: cpp,
+	ruby: ruby
 }
 
 var clanguage = {}
@@ -54,7 +65,9 @@ export class IDE extends React.Component {
 		super(props);
 		this.state={
 			code: code['typescript'],
-			language: "typescript"
+			language: "typescript",
+			ext: "ts",
+			output: ''
 		}
 	}
 
@@ -76,21 +89,26 @@ export class IDE extends React.Component {
 	
 
 	handleLanguage = (e) =>{
-		this.setState({language: clanguage[e.target.value], code: code[clanguage[e.target.value]]})
+		this.setState({output: '', ext: e.target.value, language: clanguage[e.target.value], code: code[clanguage[e.target.value]]})
 	}	
 
 	handleSubmit = async(e) => {
 		e.preventDefault();
 		var data = {
 			code: this.state.code,
-			lang: this.state.language
+			lang: this.state.ext
 		}
 		var options = {
 			method: 'POST',
+			headers: {
+		      'Content-type': 'application/json',
+		      Accept: 'application/json'
+		    },
 			body: JSON.stringify(data)
 		}
-		var res = await fetch("http://localhost:5000/submit", options);
-		console.log("D: ", res);
+		var res = await fetch("submit", options);
+		var ndata = await res.json()
+		this.setState({output: ndata.output})
 	}
 
 	render(){
@@ -120,6 +138,9 @@ export class IDE extends React.Component {
 					<option  value="rb">Ruby</option>
 				</select>
 				<button onClick={this.handleSubmit}>Run</button>
+				<div>
+					<p style={{color: 'white'}}>{this.state.output}</p>
+				</div>
 			</div>
 		)
 	}
