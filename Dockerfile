@@ -26,14 +26,6 @@ WORKDIR /usr/local/ide
 #Installing Node Dependencies
 RUN npm install
 
-WORKDIR /usr/local/ide/frontend
-
-RUN npm install
-
-RUN npm run-script build
-
-WORKDIR /usr/local/ide
-
 EXPOSE 5000
 
 #Run server
