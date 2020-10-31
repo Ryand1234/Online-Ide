@@ -18,15 +18,23 @@ RUN apt-get install -y python3
 #Free Extra Space
 RUN apt-get autoremove
 
+RUN ls /usr/local
+
 COPY . /usr/local/ide
 WORKDIR /usr/local/ide
 
 #Installing Node Dependencies
 RUN npm install
 
-RUN ls -la
+WORKDIR /usr/local/ide/frontend
 
-EXPOSE 3000
+RUN npm install
+
+RUN npm run-script build
+
+WORKDIR /usr/local/ide
+
+EXPOSE 5000
 
 #Run server
 CMD [ "node", "main.js" ]

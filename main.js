@@ -8,34 +8,31 @@ var fs = require('fs')
 var app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 //To Create Server
-var server = app.listen(process.env.PORT||3000, ()=>{
-	console.log("Server Listening at http://localhost:3000");
+var server = app.listen(process.env.PORT||5000, ()=>{
+	console.log(`Server Listening at http://localhost:${process.env.PORT||5000}`);
 	});
 
 
-//To render HomePage i.e., to enter username
-app.get('/', (req, res, next)=>{
-	res.render('home.ejs');
+// Static files
+app.use(express.static('frontend/build'));
+
+// Server React Client
+app.get("/", function(req, res) {
+	res.sendFile(path.join(__dirname, 'frontend/build/index.html'));
 });
 
-
 //To Get Code and Language
-app.post('/submit', (req, res, next)=>{
+app.post('/submit',async(req, res, next)=>{
 
 	var code = String(req.body.code);
 	var input = String(req.body.input);
-	//console.log("REQ: ",req);
 	
 	var code_filename = 'test.' + req.body.lang;
 	var input_filename = 'input.txt';
@@ -49,7 +46,6 @@ app.post('/submit', (req, res, next)=>{
 	fs.writeFile(input_filename, input, (err)=>{
                 if(err)
                         throw err;
-                console.log("Sabed");
         })
 
 	var command = 'python3 compile.py ' + code_filename + ' input.txt';
@@ -59,10 +55,10 @@ app.post('/submit', (req, res, next)=>{
 		//console.error(`exec error: ${stderr}`)
 		//console.error("STDOURT: ",stdout);
 		data = {
-                        error: stdout,
-                        code: req.body.code
-                        };
-		res.render('result.ejs', data);
+                error: stdout,
+                code: req.body.code
+            };
+		res.status(500).json(data);
 	}
 	else{	//console.log(`stdout:\n${stdout}`);
 		//console.error(`stderr: ${stderr}`);
@@ -71,7 +67,7 @@ app.post('/submit', (req, res, next)=>{
 			output: stdout,
 			code: req.body.code
 			};
-			res.render('result.ejs',data);
+			res.status(200).json(data);
 		}	
 	});
 });
