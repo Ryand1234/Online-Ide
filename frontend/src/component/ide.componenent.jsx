@@ -1,6 +1,7 @@
 import MonacoEditor from 'react-monaco-editor'
 import React, {useEffect, useState} from 'react'
 import useWindowDimensions from '../util/dimension';
+import '../pages/main.css'
 
 var typescript = `//Define TypeScript Interface
 interface IPerson{
@@ -18,7 +19,7 @@ const Aman:IPerson = {
 }
 `
 
-var python = `''Write your code here'''
+var python = `'''Write your code here'''
 `
 
 var c = `#include <stdio.h>
@@ -31,6 +32,7 @@ int main()
 `
 
 var cpp = `#include <iostream>
+using namespace std;
 
 int main()
 {
@@ -68,15 +70,9 @@ const IDE = () => {
 	const [output, setOutput] = useState('');
 
 	const onChange = (newValue, e) =>{
-		console.log("CHnage: ", newValue," E: ",e)
 		setCode(newValue)
 	}
 
-	const show = () =>{
-		console.log("CODE: ", code)
-	}
-
-	
 
 	const handleLanguage = (e) =>{
 		setLanguage(clanguage[e.target.value]);
@@ -105,68 +101,41 @@ const IDE = () => {
 		setOutput(ndata.output)
 	}
 
-		const options = {
-	      selectOnLineNumbers: true,
-	      fontSize: {size},
-	      colorDecorators: true
-	    };
-		return(
-			<div>
-				<MonacoEditor
-					width={width}
-					height="300"
-					defaultValue=''
-					value={code}
-					theme="vs-dark"
-					options={options}
-					language={language}
-					onChange={onChange}
-				/>
-				<select onChange={handleLanguage} name="lang">
-					<option  value="typescript">TypeScript</option>
-					<option value="c">C</option>
-					<option value="cpp">C++14</option>
-					<option value="py">Python3</option>
-					<option  value="rb">Ruby</option>
-				</select>
-				<button onClick={handleSubmit}>Run</button>
-				<div>
-					<p style={{color: 'white'}}>{output}</p>
-				</div>
-				<div class="box">
-				  <article class="media">
-				    <div class="media-content">
-				      <div class="content">
-				        <p>
-				          <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-				          <br />
-				          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-				        </p>
-				      </div>
-				      <nav class="level is-mobile">
-				        <div class="level-left">
-				          <a class="level-item" aria-label="reply">
-				            <span class="icon is-small">
-				              <i class="fas fa-reply" aria-hidden="true"></i>
-				            </span>
-				          </a>
-				          <a class="level-item" aria-label="retweet">
-				            <span class="icon is-small">
-				              <i class="fas fa-retweet" aria-hidden="true"></i>
-				            </span>
-				          </a>
-				          <a class="level-item" aria-label="like">
-				            <span class="icon is-small">
-				              <i class="fas fa-heart" aria-hidden="true"></i>
-				            </span>
-				          </a>
-				        </div>
-				      </nav>
-				    </div>
-				  </article>
-				</div>
-			</div>
-		)
+	const options = {
+      selectOnLineNumbers: true,
+      fontSize: {size},
+      colorDecorators: true
+    };
+	return(
+		<div>
+			<MonacoEditor
+				width={width}
+				height="300"
+				defaultValue=''
+				value={code}
+				theme="vs-dark"
+				options={options}
+				language={language}
+				onChange={onChange}
+			/>
+			<select onChange={handleLanguage} name="lang">
+				<option  value="typescript">TypeScript</option>
+				<option value="c">C</option>
+				<option value="cpp">C++14</option>
+				<option value="py">Python3</option>
+				<option  value="rb">Ruby</option>
+			</select>
+			<button onClick={handleSubmit}>Run</button>
+			<br />
+			<div class="control">
+ 				<textarea style={{color: 'white', backgroundColor: 'black' }} class="textarea has-fixed-size" rows="7" cols="35" placeholder={output} readOnly>{output}</textarea>
+ 			</div>
+ 			<footer className="ide-footer">
+				<p className="ide-dev">Developed By Riyan Dhiman</p>
+				<p className="ide-proj-link">Link to Project <a className="ide-link" href="https://github.com/Ryand1234/Online-Ide">Github</a></p>
+			</footer>
+		</div>
+	)
 }
-
+//"proxy": "https://floating-oasis-63694.herokuapp.com/",
 export default IDE;

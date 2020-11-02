@@ -12,12 +12,7 @@ export class PAGE extends React.Component {
 				</div>
 				<div className="ide-content">			
 				      <IDE />
-					
 				</div>
-				<footer className="ide-footer">
-					<p className="ide-dev">Developed By Riyan Dhiman</p>
-					<p className="ide-proj-link">Link to Project <a className="ide-link" href="https://github.com/Ryand1234/Online-Ide">Github</a></p>
-				</footer>  
 		    </div>
 		  );
 	}

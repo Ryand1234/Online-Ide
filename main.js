@@ -55,9 +55,9 @@ app.post('/submit',async(req, res, next)=>{
 		//console.error(`exec error: ${stderr}`)
 		//console.error("STDOURT: ",stdout);
 		data = {
-                error: stdout,
-                code: req.body.code
-            };
+                	error: stdout,
+        	        code: req.body.code
+ 	           };
 		res.status(500).json(data);
 	}
 	else{	//console.log(`stdout:\n${stdout}`);
@@ -66,9 +66,10 @@ app.post('/submit',async(req, res, next)=>{
 		data = {
 			output: stdout,
 			code: req.body.code
-			};
+		};
+		console.log("C: ", data);
 			res.status(200).json(data);
-		}	
+	}	
 	});
 });
 
