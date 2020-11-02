@@ -1,5 +1,6 @@
 import MonacoEditor from 'react-monaco-editor'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import useWindowDimensions from '../util/dimension';
 
 var typescript = `//Define TypeScript Interface
 interface IPerson{
@@ -41,7 +42,7 @@ int main()
 var ruby = `#Write Your Code here
 `
 
-var code = {
+var tempCode = {
 	python: python,
 	c: c,
 	typescript: typescript,
@@ -58,45 +59,38 @@ clanguage['py'] = 'python';
 clanguage['typescript'] = 'typescript';
 
 
-export class IDE extends React.Component {
+const IDE = () => {
 
-	constructor(props)
-	{
-		super(props);
-		this.state={
-			code: code['typescript'],
-			language: "typescript",
-			ext: "ts",
-			output: ''
-		}
-	}
+	const {width, size} = useWindowDimensions();
+	const [code, setCode] = useState(tempCode['typescript']);
+	const [language, setLanguage] = useState('typescript');
+	const [ext, setExt] = useState('ts');
+	const [output, setOutput] = useState('');
 
-	editorDidMount = (editor) => {
-	    // eslint-disable-next-line no-console
-	    console.log("editorDidMount", editor, editor.getValue(), editor.getModel());
-	    this.editor = editor;
-	};
-
-	onChange = (newValue, e) =>{
+	const onChange = (newValue, e) =>{
 		console.log("CHnage: ", newValue," E: ",e)
-		this.setState({code: newValue})
+		setCode(newValue)
 	}
 
-	show = () =>{
-		console.log("CODE: ", this.state.code)
+	const show = () =>{
+		console.log("CODE: ", code)
 	}
 
 	
 
-	handleLanguage = (e) =>{
-		this.setState({output: '', ext: e.target.value, language: clanguage[e.target.value], code: code[clanguage[e.target.value]]})
+	const handleLanguage = (e) =>{
+		setLanguage(clanguage[e.target.value]);
+		setExt(e.target.value);
+		setCode(tempCode[clanguage[e.target.value]]);
+		setOutput('')
+
 	}	
 
-	handleSubmit = async(e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		var data = {
-			code: this.state.code,
-			lang: this.state.ext
+			code: code,
+			lang: ext
 		}
 		var options = {
 			method: 'POST',
@@ -108,41 +102,71 @@ export class IDE extends React.Component {
 		}
 		var res = await fetch("submit", options);
 		var ndata = await res.json()
-		this.setState({output: ndata.output})
+		setOutput(ndata.output)
 	}
 
-	render(){
 		const options = {
 	      selectOnLineNumbers: true,
-	      fontSize: 15,
+	      fontSize: {size},
 	      colorDecorators: true
 	    };
 		return(
 			<div>
 				<MonacoEditor
-					width="1300"
+					width={width}
 					height="300"
 					defaultValue=''
-					value={this.state.code}
+					value={code}
 					theme="vs-dark"
 					options={options}
-					language={this.state.language}
-					editorDidMount={this.editorDidMount}
-					onChange={this.onChange}
+					language={language}
+					onChange={onChange}
 				/>
-				<select onChange={this.handleLanguage} name="lang">
+				<select onChange={handleLanguage} name="lang">
 					<option  value="typescript">TypeScript</option>
 					<option value="c">C</option>
 					<option value="cpp">C++14</option>
 					<option value="py">Python3</option>
 					<option  value="rb">Ruby</option>
 				</select>
-				<button onClick={this.handleSubmit}>Run</button>
+				<button onClick={handleSubmit}>Run</button>
 				<div>
-					<p style={{color: 'white'}}>{this.state.output}</p>
+					<p style={{color: 'white'}}>{output}</p>
+				</div>
+				<div class="box">
+				  <article class="media">
+				    <div class="media-content">
+				      <div class="content">
+				        <p>
+				          <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+				          <br />
+				          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+				        </p>
+				      </div>
+				      <nav class="level is-mobile">
+				        <div class="level-left">
+				          <a class="level-item" aria-label="reply">
+				            <span class="icon is-small">
+				              <i class="fas fa-reply" aria-hidden="true"></i>
+				            </span>
+				          </a>
+				          <a class="level-item" aria-label="retweet">
+				            <span class="icon is-small">
+				              <i class="fas fa-retweet" aria-hidden="true"></i>
+				            </span>
+				          </a>
+				          <a class="level-item" aria-label="like">
+				            <span class="icon is-small">
+				              <i class="fas fa-heart" aria-hidden="true"></i>
+				            </span>
+				          </a>
+				        </div>
+				      </nav>
+				    </div>
+				  </article>
 				</div>
 			</div>
 		)
-	}
 }
 
+export default IDE;
