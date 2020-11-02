@@ -12,18 +12,20 @@ to start sever execute `docker run -p 3000:3000 ide:1`
 visit http://localhost:3000 for the IDE
 
 ## Built
-Online Ide is build with NodeJs using EJS (Embedded JavaScript).
+Online Ide is build with NodeJs using React as frontend.
 
 ## Features Supported
 Show Errors (Compilation, Runtime etc)
 
 Support 4 Languages (C, C++, Python, Ruby)
 
-Allow user input
+Code highlighting
 
-Support tab spacing
+Improved Rich Editor
 
 ## Features to be added
 Doesn't allow code save
+
+Allow user input
 
 ## Helper Repo for Code Editor is present at [Code-Editor](https://github.com/Ryand1234/Code-Editor)
