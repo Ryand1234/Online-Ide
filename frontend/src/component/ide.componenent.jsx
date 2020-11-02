@@ -1,5 +1,7 @@
 import MonacoEditor from 'react-monaco-editor'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import useWindowDimensions from '../util/dimension';
+import '../pages/main.css'
 
 var typescript = `//Define TypeScript Interface
 interface IPerson{
@@ -17,7 +19,7 @@ const Aman:IPerson = {
 }
 `
 
-var python = `''Write your code here'''
+var python = `'''Write your code here'''
 `
 
 var c = `#include <stdio.h>
@@ -30,6 +32,7 @@ int main()
 `
 
 var cpp = `#include <iostream>
+using namespace std;
 
 int main()
 {
@@ -41,7 +44,7 @@ int main()
 var ruby = `#Write Your Code here
 `
 
-var code = {
+var tempCode = {
 	python: python,
 	c: c,
 	typescript: typescript,
@@ -58,45 +61,32 @@ clanguage['py'] = 'python';
 clanguage['typescript'] = 'typescript';
 
 
-export class IDE extends React.Component {
+const IDE = () => {
 
-	constructor(props)
-	{
-		super(props);
-		this.state={
-			code: code['typescript'],
-			language: "typescript",
-			ext: "ts",
-			output: ''
-		}
+	const {width, size} = useWindowDimensions();
+	const [code, setCode] = useState(tempCode['typescript']);
+	const [language, setLanguage] = useState('typescript');
+	const [ext, setExt] = useState('ts');
+	const [output, setOutput] = useState('');
+
+	const onChange = (newValue, e) =>{
+		setCode(newValue)
 	}
 
-	editorDidMount = (editor) => {
-	    // eslint-disable-next-line no-console
-	    console.log("editorDidMount", editor, editor.getValue(), editor.getModel());
-	    this.editor = editor;
-	};
 
-	onChange = (newValue, e) =>{
-		console.log("CHnage: ", newValue," E: ",e)
-		this.setState({code: newValue})
-	}
+	const handleLanguage = (e) =>{
+		setLanguage(clanguage[e.target.value]);
+		setExt(e.target.value);
+		setCode(tempCode[clanguage[e.target.value]]);
+		setOutput('')
 
-	show = () =>{
-		console.log("CODE: ", this.state.code)
-	}
-
-	
-
-	handleLanguage = (e) =>{
-		this.setState({output: '', ext: e.target.value, language: clanguage[e.target.value], code: code[clanguage[e.target.value]]})
 	}	
 
-	handleSubmit = async(e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		var data = {
-			code: this.state.code,
-			lang: this.state.ext
+			code: code,
+			lang: ext
 		}
 		var options = {
 			method: 'POST',
@@ -108,41 +98,44 @@ export class IDE extends React.Component {
 		}
 		var res = await fetch("submit", options);
 		var ndata = await res.json()
-		this.setState({output: ndata.output})
+		setOutput(ndata.output)
 	}
 
-	render(){
-		const options = {
-	      selectOnLineNumbers: true,
-	      fontSize: 15,
-	      colorDecorators: true
-	    };
-		return(
-			<div>
-				<MonacoEditor
-					width="1300"
-					height="300"
-					defaultValue=''
-					value={this.state.code}
-					theme="vs-dark"
-					options={options}
-					language={this.state.language}
-					editorDidMount={this.editorDidMount}
-					onChange={this.onChange}
-				/>
-				<select onChange={this.handleLanguage} name="lang">
-					<option  value="typescript">TypeScript</option>
-					<option value="c">C</option>
-					<option value="cpp">C++14</option>
-					<option value="py">Python3</option>
-					<option  value="rb">Ruby</option>
-				</select>
-				<button onClick={this.handleSubmit}>Run</button>
-				<div>
-					<p style={{color: 'white'}}>{this.state.output}</p>
-				</div>
-			</div>
-		)
-	}
+	const options = {
+      selectOnLineNumbers: true,
+      fontSize: {size},
+      colorDecorators: true
+    };
+	return(
+		<div>
+			<MonacoEditor
+				width={width}
+				height="300"
+				defaultValue=''
+				value={code}
+				theme="vs-dark"
+				options={options}
+				language={language}
+				onChange={onChange}
+			/>
+			<select onChange={handleLanguage} name="lang">
+				<option  value="typescript">TypeScript</option>
+				<option value="c">C</option>
+				<option value="cpp">C++14</option>
+				<option value="py">Python3</option>
+				<option  value="rb">Ruby</option>
+			</select>
+			<button onClick={handleSubmit}>Run</button>
+			<br />
+			<div class="control">
+ 				<textarea style={{color: 'white', backgroundColor: 'black' }} class="textarea has-fixed-size" rows="7" cols="35" placeholder={output} readOnly>{output}</textarea>
+ 			</div>
+ 			<footer className="ide-footer">
+				<p className="ide-dev">Developed By Riyan Dhiman</p>
+				<p className="ide-proj-link">Link to Project <a className="ide-link" href="https://github.com/Ryand1234/Online-Ide">Github</a></p>
+			</footer>
+		</div>
+	)
 }
-
+//"proxy": "https://floating-oasis-63694.herokuapp.com/",
+export default IDE;
