@@ -25,7 +25,11 @@ Improved Rich Editor
 
 Allow user input
 
+Improved Rich Editor
+
 ## Features to be added
 Doesn't allow code save
+
+Allow user input
 
 ## Helper Repo for Code Editor is present at [Code-Editor](https://github.com/Ryand1234/Code-Editor)
