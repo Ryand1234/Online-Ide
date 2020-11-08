@@ -58,7 +58,7 @@ app.post('/submit',async(req, res, next)=>{
                 	error: stdout,
         	        code: req.body.code
  	           };
-		res.status(500).json(data);
+		res.status(200).json(data);
 	}
 	else{	//console.log(`stdout:\n${stdout}`);
 		//console.error(`stderr: ${stderr}`);
@@ -67,8 +67,7 @@ app.post('/submit',async(req, res, next)=>{
 			output: stdout,
 			code: req.body.code
 		};
-		console.log("C: ", data);
-			res.status(200).json(data);
+		res.status(200).json(data);
 	}	
 	});
 });

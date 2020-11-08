@@ -68,9 +68,14 @@ const IDE = () => {
 	const [language, setLanguage] = useState('typescript');
 	const [ext, setExt] = useState('ts');
 	const [output, setOutput] = useState('');
+	const [input, setInput] = useState('');
 
 	const onChange = (newValue, e) =>{
 		setCode(newValue)
+	}
+
+	const handleInput = (e) =>{
+		setInput(e.target.value)
 	}
 
 
@@ -79,6 +84,7 @@ const IDE = () => {
 		setExt(e.target.value);
 		setCode(tempCode[clanguage[e.target.value]]);
 		setOutput('')
+		setInput('')
 
 	}	
 
@@ -86,6 +92,7 @@ const IDE = () => {
 		e.preventDefault();
 		var data = {
 			code: code,
+			input: input,
 			lang: ext
 		}
 		var options = {
@@ -107,6 +114,7 @@ const IDE = () => {
       colorDecorators: true
     };
 	return(
+		<>
 		<div>
 			<MonacoEditor
 				width={width}
@@ -126,16 +134,27 @@ const IDE = () => {
 				<option  value="rb">Ruby</option>
 			</select>
 			<button onClick={handleSubmit}>Run</button>
-			<br />
-			<div class="control">
- 				<textarea style={{color: 'white', backgroundColor: 'black' }} class="textarea has-fixed-size" rows="7" cols="35" placeholder={output} readOnly>{output}</textarea>
- 			</div>
+			</div>
+			<div className="columns is-mobile">
+			  <div className="column">
+			  	<p style={{color: 'white', backgroundColor: 'black' }}>Input</p>
+				<div className="control">
+	 				<textarea onKeyUp={handleInput} style={{borderColor: 'black', color: 'white', backgroundColor: 'black' }} className="textarea has-fixed-size" rows="7" cols="18" placeholder="Input" ></textarea>
+	 			</div>
+			  </div>
+			  <div className="column">
+			  	<p style={{color: 'white', backgroundColor: 'black' }}>Output</p>
+				<div className="control">
+	 				<textarea style={{borderColor: 'black', color: 'white', backgroundColor: 'black' }} className="textarea has-fixed-size" rows="7" cols="18" placeholder={output} readOnly>{output}</textarea>
+	 			</div>
+			  </div>
+			</div>
  			<footer className="ide-footer">
 				<p className="ide-dev">Developed By Riyan Dhiman</p>
 				<p className="ide-proj-link">Link to Project <a className="ide-link" href="https://github.com/Ryand1234/Online-Ide">Github</a></p>
 			</footer>
-		</div>
-	)
+		
+	</>)
 }
 //"proxy": "https://floating-oasis-63694.herokuapp.com/",
 export default IDE;
