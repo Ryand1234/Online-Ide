@@ -23,6 +23,10 @@ Code highlighting
 
 Improved Rich Editor
 
+Allow user input
+
+Improved Rich Editor
+
 ## Features to be added
 Doesn't allow code save
 
