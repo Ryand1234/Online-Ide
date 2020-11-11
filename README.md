@@ -7,7 +7,7 @@ clone the repository
 
 execute command `docker build -t ide:1 .`
 
-to start sever execute `docker run -p 3000:3000 ide:1`
+to start server execute `docker run -p 3000:3000 ide:1`
 
 visit http://localhost:3000 for the IDE
 
@@ -30,6 +30,6 @@ Improved Rich Editor
 ## Features to be added
 Doesn't allow code save
 
-Allow user input
+TypeScript compiler
 
 ## Helper Repo for Code Editor is present at [Code-Editor](https://github.com/Ryand1234/Code-Editor)

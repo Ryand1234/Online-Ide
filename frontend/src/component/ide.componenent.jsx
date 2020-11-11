@@ -1,5 +1,5 @@
 import MonacoEditor from 'react-monaco-editor'
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import useWindowDimensions from '../util/dimension';
 import '../pages/main.css'
 
@@ -63,7 +63,7 @@ clanguage['typescript'] = 'typescript';
 
 const IDE = () => {
 
-	const {width, size} = useWindowDimensions();
+	const {width, size, col} = useWindowDimensions();
 	const [code, setCode] = useState(tempCode['typescript']);
 	const [language, setLanguage] = useState('typescript');
 	const [ext, setExt] = useState('ts');
@@ -77,7 +77,6 @@ const IDE = () => {
 	const handleInput = (e) =>{
 		setInput(e.target.value)
 	}
-
 
 	const handleLanguage = (e) =>{
 		setLanguage(clanguage[e.target.value]);
@@ -105,7 +104,7 @@ const IDE = () => {
 		}
 		var res = await fetch("submit", options);
 		var ndata = await res.json()
-		setOutput(ndata.output)
+		setOutput(ndata.output||ndata.error)
 	}
 
 	const options = {
@@ -139,13 +138,13 @@ const IDE = () => {
 			  <div className="column">
 			  	<p style={{color: 'white', backgroundColor: 'black' }}>Input</p>
 				<div className="control">
-	 				<textarea onKeyUp={handleInput} style={{borderColor: 'black', color: 'white', backgroundColor: 'black' }} className="textarea has-fixed-size" rows="7" cols="18" placeholder="Input" ></textarea>
+	 				<textarea onKeyUp={handleInput} style={{borderColor: 'black', color: 'white', backgroundColor: 'black' }} className="textarea has-fixed-size" rows="7" cols={col} placeholder="Input" ></textarea>
 	 			</div>
 			  </div>
 			  <div className="column">
 			  	<p style={{color: 'white', backgroundColor: 'black' }}>Output</p>
 				<div className="control">
-	 				<textarea style={{borderColor: 'black', color: 'white', backgroundColor: 'black' }} className="textarea has-fixed-size" rows="7" cols="18" placeholder={output} readOnly>{output}</textarea>
+	 				<textarea style={{borderColor: 'black', color: 'white', backgroundColor: 'black' }} className="textarea has-fixed-size" rows="7" cols={col} placeholder={output} readOnly>{output}</textarea>
 	 			</div>
 			  </div>
 			</div>

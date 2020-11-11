@@ -3,14 +3,19 @@ import $ from 'jquery'
 
 function getWindowDimensions() {
   const width = $(window).width()
-  var size;
-  if(width < 750)
+  var size, col;
+  if(width < 750){
     size = 25;
-  else
+    col = 35
+  }
+  else{
     size = 15
+    col = 80
+  }
   return {
     width,
-    size
+    size,
+    col
   };
 }
 
